@@ -63,11 +63,16 @@ struct ContentView: View {
         VStack {
             Text("Experience")
                 .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/.bold())
-                .frame(maxWidth: .infinity,alignment: .leading)
-            HStack {
-                Text("1")
-                VStack {
-                    ForEach(me.experiences, id: \.start) { item in
+                .frame(maxWidth: .infinity,alignment: .leading) 
+            
+            VStack (spacing: 0){
+                ForEach(me.experiences.indices, id: \.self) { index in
+                    HStack {
+                        DotLineShap(style: index == 0 ? .bottomHalf : index == me.experiences.count - 1 ? .topHalf : .full)
+                            .frame(width: 70)
+                        
+                        let item = me.experiences[index]
+                        
                         VStack (alignment: .leading, spacing: 10){
                             Text("\(item.start)——\(item.end)")
                                 .foregroundColor(.secondary)
@@ -75,9 +80,9 @@ struct ContentView: View {
                                 .font(.title2.bold())
                             Text(item.company)
                                 .font(.title2)
-                            
                         }
-                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
                     }
                 }
             }
@@ -85,19 +90,20 @@ struct ContentView: View {
     }
     
     var skill: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack {
             Text("Skill")
                 .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/.bold())
                 .frame(maxWidth: .infinity,alignment: .leading)
-            HStack(spacing:30){
-        
-                ForEach(skillImage, id: \.self) { item in
-                    VStack{
-                        Image(item)
+            HStack {
+                ForEach(me.skills, id: \.self) { item in
+                    VStack {
+                        Image(item.lowercased())
                             .resizable()
-                            .scaledToFit()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 50)
                         Text(item)
                     }
+                    .frame(width: 80)
                 }
             }
         }

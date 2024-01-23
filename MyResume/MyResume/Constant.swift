@@ -15,7 +15,7 @@ struct Resume {
     let title    = "iOS Developer"
     let location = "位置：台灣"
     let bio      = "與 swift 熱戀中，經營 swift 教學頻道，希望讓更多人加入 coding 的美好世界 😊"
-    let skills   = ["python", "swift", "mySQL", "xd"]
+    let skills   = ["python", "swift", "MySQL", "xd"]
     let experiences: [Experience] = [("Swift Content Creator",
                                       "ChaoCode",
                                       "2022 年 4 月",
