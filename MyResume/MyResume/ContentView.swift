@@ -5,13 +5,16 @@
 //  Created by jaysun on 2024/1/22.
 //
 
+
+// Human interface guidelines  需要学习
+
 import SwiftUI
 
 struct ContentView: View {
     
     let me = Resume.shared
     
-    let skillImage = ["mysql","python","swift","xd"]
+    @State var isShowContactView = false
     
     var body: some View {
         ScrollView {
@@ -23,9 +26,34 @@ struct ContentView: View {
             .padding()
         }
         .scrollIndicators(.hidden)
+        .overlay(
+           modalView
+        )
+        .overlay (alignment: .top){
+            contactView
+        }
     }
     
+    var modalView: some View {
+        Color(uiColor: .black)
+            .edgesIgnoringSafeArea(.all)
+            .opacity(isShowContactView ? 0.4 : 0)
+            .onTapGesture {
+                isShowContactView = false
+            }
+    }
     
+    var contactView: some View {
+        Group {
+            if isShowContactView {
+                ContactView(isShow: $isShowContactView)
+                    .offset(y:UIScreen.main.bounds.maxY*0.2)
+                    // 描述了过渡转场的效果
+                    .transition(.opacity)
+            }
+        }
+    }
+
     var userinfo: some View {
         VStack {
             HStack{
@@ -49,13 +77,23 @@ struct ContentView: View {
                 .font(.title3)
                 .lineSpacing(10)
             
-            Text("ContactMe")
-                .font(.title2.weight(.bold))
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
-                .background(RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(.brown))
+            
+            Button(action: {
+                print("click button 2")
+                // 动画的参数，是一个时间曲线
+                withAnimation {
+                    isShowContactView = true
+                }
+            }, label: {
+                Text("ContactMe")
+                    .font(.title2.weight(.bold))
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(RoundedRectangle(cornerRadius: 20)
+                        .foregroundColor(.brown))
+            })
+            
         }
     }
     
@@ -63,7 +101,7 @@ struct ContentView: View {
         VStack {
             Text("Experience")
                 .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/.bold())
-                .frame(maxWidth: .infinity,alignment: .leading) 
+                .frame(maxWidth: .infinity,alignment: .leading)
             
             VStack (spacing: 0){
                 ForEach(me.experiences.indices, id: \.self) { index in
