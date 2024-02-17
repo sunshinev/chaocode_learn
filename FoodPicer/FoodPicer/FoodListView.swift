@@ -9,8 +9,14 @@ import SwiftUI
 
 struct FoodListView: View {
     
+    @Environment(\.editMode) var editMode
+    
     @State private var foods = Food.examples
     @State private var selectFoods: Set<UUID> = []
+    
+    var isEditing: Bool {
+        editMode?.wrappedValue == .active
+    }
     
     var body: some View {
         VStack (alignment:.leading){
@@ -35,20 +41,43 @@ struct FoodListView: View {
             .scrollIndicators(.hidden)
         }
         .background(.groupbg)
-        .safeAreaInset(edge: .bottom, alignment: .trailing, content: {
-            Button(role: .none) {
-                
-            } label: {
-                Image(systemName: "plus.circle.fill")
-                    .font(.system(size: 50))
-                    .symbolRenderingMode(.palette)
-                    .foregroundStyle(.white, .blue)
+        .safeAreaInset(edge: .bottom) {
+            HStack {
+                addButton
+                    .opacity(isEditing ? 0 : 1)
+                removeButton
+                    .opacity(isEditing ? 1 : 0)
             }
-            .padding()
-        })
+        }
+    }
+    
+    
+    var addButton: some View {
+        Button(role: .none) {
+            
+        } label: {
+            Image(systemName: "plus.circle.fill")
+                .font(.system(size: 30))
+                .symbolRenderingMode(.palette)
+                .foregroundStyle(.white, .blue)
+        }
+        .padding()
+    }
+    
+    var removeButton: some View {
+        Button(role: .none) {
+            foods = foods.filter { !selectFoods.contains($0.id) }
+        } label: {
+            Text("删除选中")
+                .buttonStyle(.borderedProminent)
+                .buttonBorderShape(.capsule)
+                .controlSize(.large)
+        }
+
     }
 }
 
+
 #Preview {
-    FoodListView()
+    FoodListView().environment(\.editMode,.constant(.active))
 }
