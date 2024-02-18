@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3B1E241B2B73BF71009BBD83 /* shapeStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1E241A2B73BF71009BBD83 /* shapeStyleView.swift */; };
 		3B1E241E2B74E02C009BBD83 /* FoodListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1E241D2B74E02C009BBD83 /* FoodListView.swift */; };
+		3BA048EC2B824E2C00A6086B /* FoodFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA048EB2B824E2C00A6086B /* FoodFormView.swift */; };
 		3BF662742B70DD3F002D3FEE /* FoodPicerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF662732B70DD3F002D3FEE /* FoodPicerApp.swift */; };
 		3BF662762B70DD3F002D3FEE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF662752B70DD3F002D3FEE /* ContentView.swift */; };
 		3BF662782B70DD40002D3FEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BF662772B70DD40002D3FEE /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		3B1E241A2B73BF71009BBD83 /* shapeStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shapeStyleView.swift; sourceTree = "<group>"; };
 		3B1E241D2B74E02C009BBD83 /* FoodListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListView.swift; sourceTree = "<group>"; };
+		3BA048EB2B824E2C00A6086B /* FoodFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodFormView.swift; sourceTree = "<group>"; };
 		3BF662702B70DD3F002D3FEE /* FoodPicer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodPicer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF662732B70DD3F002D3FEE /* FoodPicerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPicerApp.swift; sourceTree = "<group>"; };
 		3BF662752B70DD3F002D3FEE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				3BF662832B72889E002D3FEE /* Extensions.swift */,
 				3B1E241A2B73BF71009BBD83 /* shapeStyleView.swift */,
 				3B1E241D2B74E02C009BBD83 /* FoodListView.swift */,
+				3BA048EB2B824E2C00A6086B /* FoodFormView.swift */,
 			);
 			path = FoodPicer;
 			sourceTree = "<group>";
@@ -154,6 +157,7 @@
 				3B1E241B2B73BF71009BBD83 /* shapeStyleView.swift in Sources */,
 				3BF662742B70DD3F002D3FEE /* FoodPicerApp.swift in Sources */,
 				3BF662822B70DDB4002D3FEE /* Food.swift in Sources */,
+				3BA048EC2B824E2C00A6086B /* FoodFormView.swift in Sources */,
 				3BF662842B72889E002D3FEE /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
