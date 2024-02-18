@@ -121,3 +121,12 @@ extension ContentView {
         .font(.title2)
     }
 }
+
+
+extension View {
+    func mainButtonStyle(shape: ButtonBorderShape = .capsule) -> some View {
+        buttonStyle(.borderedProminent)
+            .buttonBorderShape(shape)
+            .controlSize(.large)
+    }
+}
