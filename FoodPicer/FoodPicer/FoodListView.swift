@@ -18,6 +18,8 @@ struct FoodListView: View {
     @State private var shouldShowSheet: Bool = false
     @State private var foodDetailSheetSelected: Food?
     
+    @State private var shouldShowFoodForm: Bool = false
+    
     var isEditing: Bool {
         editMode?.wrappedValue == .active
     }
@@ -51,6 +53,11 @@ struct FoodListView: View {
         }
         .background(.groupbg)
         .safeAreaInset(edge: .bottom, content: buildFloatButton)
+        .sheet(isPresented: $shouldShowFoodForm) {
+            FoodFormView(food: Food(name: "", image: "")) { food in
+                foods.append(food)
+            }
+        }
         .sheet(isPresented: $shouldShowSheet, content: {
             if let selectedFood = foodDetailSheetSelected {
                 HStack (spacing: 30){
@@ -147,7 +154,7 @@ private extension FoodListView {
     
     var addButton: some View {
         Button {
-            
+            shouldShowFoodForm = true
         } label: {
             Image(systemName: "plus.circle.fill")
                 .font(.system(size: 50))
@@ -155,6 +162,7 @@ private extension FoodListView {
                 .symbolRenderingMode(.palette)
                 .foregroundStyle(.white, Color.accentColor.gradient)
         }
+
     }
     
     var removeButton: some View {
