@@ -14,6 +14,16 @@ private extension FoodListView {
         
         @State var food: Food
         
+        private var isButtonValid: Bool {
+            food.name.isEmpty || food.image.count > 2
+        }
+        
+        private var buttonUnValidMessage: String? {
+            if food.name.isEmpty { return "名称不能为空" }
+            if food.image.count > 2 { return "图示数量>2" }
+            return .none
+        }
+        
         var body: some View {
             VStack {
                 Label("edit", systemImage: "pencil")
@@ -26,25 +36,37 @@ private extension FoodListView {
                     LabeledContent("图示") {
                         TextField("必填", text: $food.image)
                     }
-                    LabeledContent("卡路里") {
-                        TextField("必填", value: $food.calorie, format: .number.precision(.fractionLength(1)))
-                    }
-                    LabeledContent("碳水") {
-                        TextField("必填", value: $food.carb,format: .number.precision(.fractionLength(1)))
-                    }
-                    LabeledContent("脂肪") {
-                        TextField("必填", value: $food.fat ,format: .number.precision(.fractionLength(1)))
-                    }
-                    LabeledContent("蛋白质") {
-                        TextField("必填", value: $food.protein,format: .number.precision(.fractionLength(1)))
-                    }
+                    
+                    buildLabledContent(title:"热量", value:$food.calorie,suffix:"kcal")
+                    buildLabledContent(title:"碳水", value:$food.carb,suffix:"g")
+                    buildLabledContent(title:"脂肪", value:$food.fat,suffix:"g")
+                    buildLabledContent(title:"蛋白质", value:$food.protein,suffix:"g")
                 }
+                
+                Button {
+                    
+                } label: {
+                    Text(buttonUnValidMessage ?? "保存")
+                        .frame(maxWidth: .infinity)
+                }
+                .mainButtonStyle()
+                .padding()
+                .disabled(isButtonValid)
+
             }
             .multilineTextAlignment(.trailing)
             .background(.groupbg)
         }
+        
+        private func buildLabledContent(title: String, value: Binding<Double>, suffix: String) -> some View {
+            LabeledContent(title) {
+                HStack{
+                    TextField("必填", value: value,format: .number.precision(.fractionLength(1)))
+                    Text(suffix)
+                }
+            }
+        }
     }
-    
 }
 
 
