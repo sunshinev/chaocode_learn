@@ -7,18 +7,44 @@
 
 import SwiftUI
 
+
+private enum Sheet: View, Identifiable {
+    case newFood((Food)->Void)
+    case editFood(Binding<Food>)
+    case foodDetail(Food)
+    
+    
+    var id : UUID {
+        switch self {
+        case .newFood(_):
+            return UUID()
+        case .editFood(let binding):
+            return binding.wrappedValue.id
+        case .foodDetail(let food):
+            return food.id
+        }
+    }
+    
+    
+    var body: some View {
+        switch self {
+        case .newFood(let onSubmit):
+            FoodListView.FoodFormView(food: .new, onSubmit: onSubmit)
+        case .editFood(let binding):
+            FoodListView.FoodFormView(food: binding.wrappedValue) { binding.wrappedValue = $0 }
+        case .foodDetail(let food):
+            FoodListView.FoodDetailSheet(selectedFood: food)
+        }
+    }
+}
+    
 struct FoodListView: View {
     
     @Environment(\.editMode) var editMode
     
     @State private var foods = Food.examples
     @State private var selectFoods: Set<UUID> = []
-    
-    @State private var foodDetailSheetHeight: CGFloat = FoodDetailSheetHeightkey.defaultValue
-    @State private var shouldShowSheet: Bool = false
-    @State private var foodDetailSheetSelected: Food?
-    
-    @State private var shouldShowFoodForm: Bool = false
+    @State private var sheet: Sheet?
     
     var isEditing: Bool {
         editMode?.wrappedValue == .active
@@ -38,13 +64,15 @@ struct FoodListView: View {
                             if isEditing {
                                 return
                             }
-                            foodDetailSheetSelected = food
-                            shouldShowSheet = true
+                            sheet = .foodDetail(food)
                         }
                     Image(systemName: "pencil")
                         .font(.title2.bold())
                         .opacity(isEditing ? 1 : 0)
                         .foregroundColor(.accentColor)
+                        .onTapGesture {
+                            sheet = .editFood($food)
+                        }
                 }
             }
             .listStyle(.plain)
@@ -53,68 +81,68 @@ struct FoodListView: View {
         }
         .background(.groupbg)
         .safeAreaInset(edge: .bottom, content: buildFloatButton)
-        .sheet(isPresented: $shouldShowFoodForm) {
-            FoodFormView(food: Food(name: "", image: "")) { food in
-                foods.append(food)
-            }
-        }
-        .sheet(isPresented: $shouldShowSheet, content: {
-            if let selectedFood = foodDetailSheetSelected {
-                HStack (spacing: 30){
-                    Text(selectedFood.image)
-                        .font(.system(size: 100))
-                    
-                    Grid(horizontalSpacing: 12, verticalSpacing: 12) {
-                        GridRow{
-                            Text("蛋白质")
-                            Text("碳水" )
-                            Text("脂肪")
-                        }
-                        .frame(minWidth: 60)
-                        
-                        Divider()
-                            .gridCellUnsizedAxes(.horizontal)
-                            .padding(.horizontal,-10)
-                        GridRow{
-                            Text(selectedFood.$protein)
-                            Text(selectedFood.$carb)
-                            Text(selectedFood.$fat)
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 8).foregroundColor(.bg))
-                    .transition(.move(edge: .top))
-                }
-                .padding()
-    //            .presentationDetents([.medium])
-                .overlay {
-                    GeometryReader{ proxy in
-                        Color.clear.preference(key: FoodDetailSheetHeightkey.self, value: proxy.size.height)
-                    }
-                }
-                .onPreferenceChange(FoodDetailSheetHeightkey.self) {
-                    foodDetailSheetHeight = $0
-                }
-                .presentationDetents([.height(foodDetailSheetHeight)])
-            }
-        })
+        .sheet(item: $sheet) { $0 }
     }
 }
 
 
 private extension FoodListView {
-    struct FoodDetailSheetHeightkey: PreferenceKey {
+    
+    struct DetailSheetHeightkey: PreferenceKey {
         static var defaultValue: CGFloat = 300
         
         static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
             value = nextValue()
         }
     }
-}
-
-
-private extension FoodListView {
+    
+    
+    struct FoodDetailSheet: View {
+        @State private var foodDetailSheetHeight: CGFloat = FoodListView.DetailSheetHeightkey.defaultValue
+        
+        let selectedFood: Food
+        
+        var body: some View {
+            HStack (spacing: 30){
+                Text(selectedFood.image)
+                    .font(.system(size: 100))
+                
+                Grid(horizontalSpacing: 12, verticalSpacing: 12) {
+                    GridRow{
+                        Text("蛋白质")
+                        Text("碳水" )
+                        Text("脂肪")
+                    }
+                    .frame(minWidth: 60)
+                    
+                    Divider()
+                        .gridCellUnsizedAxes(.horizontal)
+                        .padding(.horizontal,-10)
+                    GridRow{
+                        Text(selectedFood.$protein)
+                        Text(selectedFood.$carb)
+                        Text(selectedFood.$fat)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 8).foregroundColor(.bg))
+                .transition(.move(edge: .top))
+            }
+            .padding()
+//            .presentationDetents([.medium])
+            .overlay {
+                GeometryReader{ proxy in
+                    Color.clear.preference(key: FoodListView.DetailSheetHeightkey.self, value: proxy.size.height)
+                }
+            }
+            .onPreferenceChange(FoodListView.DetailSheetHeightkey.self) {
+                foodDetailSheetHeight = $0
+            }
+            .presentationDetents([.height(foodDetailSheetHeight)])
+        
+        }
+    }
     
     func buildFloatButton() -> some View  {
         ZStack {
@@ -154,7 +182,7 @@ private extension FoodListView {
     
     var addButton: some View {
         Button {
-            shouldShowFoodForm = true
+            sheet = .newFood{ foods.append($0) }
         } label: {
             Image(systemName: "plus.circle.fill")
                 .font(.system(size: 50))
@@ -182,5 +210,4 @@ private extension FoodListView {
 
 #Preview {
     FoodListView()
-//    FoodListView().environment(\.editMode,.constant(.active))
 }

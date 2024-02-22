@@ -21,6 +21,7 @@ extension FoodListView {
         @FocusState private var field: MyField?
         
         @State var food: Food
+        
         private var isButtonValid: Bool {
             food.name.isEmpty || food.image.count > 2
         }

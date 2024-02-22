@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Food: Hashable {
+struct Food: Equatable, Identifiable {
     
     var name: String
     var image: String
@@ -26,11 +26,15 @@ struct Food: Hashable {
         Food(name: "薯条", image: "🍟", calorie: 3.8, carb: 2, fat: 3.7, protein: 3),
         Food(name: "米饭", image: "🍚", calorie: 4, carb: 2.5, fat: 3, protein: 1.0),
     ]
+    
+    static var new: Food {
+        Food(name: "", image: "")
+    }
 }
 
 
 
-@propertyWrapper struct Suffix: Hashable {
+@propertyWrapper struct Suffix: Equatable {
     var wrappedValue: Double
     
     private let suffix: String
