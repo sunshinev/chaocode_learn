@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct FoodPickerScreen: View {
     
     @State var selectedFood: Food?
     @State var isShowDetail = true
@@ -37,7 +37,7 @@ struct ContentView: View {
 }
 
 
-extension ContentView {
+extension FoodPickerScreen {
     init(selectedFood: Food) {
         _selectedFood = State(wrappedValue: selectedFood)
     }
@@ -46,5 +46,5 @@ extension ContentView {
 
 #Preview {
     
-    ContentView()
+    FoodPickerScreen()
 }

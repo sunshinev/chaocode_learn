@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-extension FoodListView {
+extension FoodListScreen {
     
     struct FoodFormView: View {
         
@@ -38,12 +38,12 @@ extension FoodListView {
         var body: some View {
             VStack {
                 HStack{
-                    Label("edit", systemImage: "pencil")
+                    Label("edit", systemImage: .pencil)
                         .font(.title2.bold())
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .push(.leading)
                         .foregroundColor(.accentColor)
                         
-                    Image(systemName: "xmark.circle.fill")
+                    Image(systemName: .xmark)
                         .font(.title2)
                         .onTapGesture {
                             dismiss()
@@ -96,7 +96,7 @@ extension FoodListView {
                     onSubmit(food)
                 } label: {
                     Text(buttonUnValidMessage ?? "保存")
-                        .frame(maxWidth: .infinity)
+                        .push(.center)
                 }
                 .mainButtonStyle()
                 .padding()
@@ -123,5 +123,5 @@ extension FoodListView {
 
 
 #Preview {
-    FoodListView.FoodFormView(food: Food(name: "", image: "")) { _ in }
+    FoodListScreen.FoodFormView(food: Food(name: "", image: "")) { _ in }
 }

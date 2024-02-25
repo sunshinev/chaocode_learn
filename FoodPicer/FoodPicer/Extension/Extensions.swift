@@ -21,8 +21,7 @@ extension ShapeStyle where Self == Color {
     }
 }
 
-extension ContentView {
-    
+extension FoodPickerScreen {
     func ImageShow() -> some View {
         Group {
             if selectedFood != .none {
@@ -54,7 +53,7 @@ extension ContentView {
                     .transition(.opacity)
                     .foregroundColor(.green)
                     .padding()
-                Image(systemName: "info.circle.fill")
+                Image(systemName: .info)
                     .font(.title2)
                     .onTapGesture {
                         withAnimation(.spring(dampingFraction:  0.5)) {
@@ -64,7 +63,6 @@ extension ContentView {
             }
         }
     }
-    
     
     func FoodDetail() -> some View {
         VStack {
@@ -85,7 +83,7 @@ extension ContentView {
                         Text(selectedFood!.$fat)
                     }
                 }
-                .frame(maxWidth: .infinity)
+                .push(.center)
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 8).foregroundColor(.bg))
                 .transition(.move(edge: .top))
@@ -104,7 +102,7 @@ extension ContentView {
                 Text(selectedFood == .none ? "choose one":"next one")
                     .animation(.none, value: selectedFood)
                     .transformEffect(.identity)
-                    .frame(maxWidth: .infinity)
+                    .push(.center)
             }
             .buttonStyle(.borderedProminent)
             
@@ -112,7 +110,7 @@ extension ContentView {
                 selectedFood = .none
             } label: {
                 Text("reset")
-                    .frame(maxWidth: .infinity)
+                    .push(.center)
             }
             .buttonStyle(.bordered)
         }
@@ -120,6 +118,8 @@ extension ContentView {
         .controlSize(.large)
         .font(.title2)
     }
+    
+
 }
 
 
@@ -128,5 +128,20 @@ extension View {
         buttonStyle(.borderedProminent)
             .buttonBorderShape(shape)
             .controlSize(.large)
+    }
+    
+    func sheet(item: Binding<(some View & Identifiable)? >) -> some View{
+        sheet(item: item) { $0 }
+    }
+    
+    func push(_ alignment: TextAlignment) -> some View {
+        switch alignment {
+        case .leading:
+            return frame(maxWidth: .infinity, alignment: .leading)
+        case .center:
+            return frame(maxWidth: .infinity, alignment: .center)
+        case .trailing:
+            return frame(maxWidth: .infinity, alignment: .trailing)
+        }
     }
 }
