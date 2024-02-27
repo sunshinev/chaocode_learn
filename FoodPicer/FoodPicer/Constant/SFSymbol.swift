@@ -14,8 +14,19 @@ enum SFSymbol: String {
     case xmark = "xmark.circle.fill"
     case forkAndKnife = "fork.knife"
     case info = "info.circle.fill"
+    case house = "house.fill"
+    case list = "list.bullet"
+    case gear = "gearshape"
+    case moon = "moon.fill"
+    case unitSign = "numbersign"
 }
 
+
+extension SFSymbol: View {
+    var body: some View {
+        Image(systemName: rawValue)
+    }
+}
 
 extension Label where Title == Text, Icon == Image {
     init(_ text: String, systemImage: SFSymbol) {
