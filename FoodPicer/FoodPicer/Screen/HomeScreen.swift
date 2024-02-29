@@ -7,10 +7,29 @@
 
 import SwiftUI
 
+
 struct HomeScreen: View {
+    @AppStorage(.shouldUseDarkMode) private var shouldUserDarkMode = false
+    @State var tab: Tab = {
+//        let rawValue = UserDefaults.standard.string(forKey: UserDefaults.Key.startTab.rawValue) ?? ""
+//        return Tab(rawValue: rawValue) ?? .picker
+        @AppStorage(.startTab) var tab = HomeScreen.Tab.picker
+        return tab
+    }()
     
-    enum Tab: View, CaseIterable {
-        case picker, list
+    var body: some View {
+        NavigationStack {
+            TabView (selection: $tab){
+                ForEach(Tab.allCases, id: \.self) { $0 }
+            }
+            .preferredColorScheme(shouldUserDarkMode ? .dark : .light)
+        }
+    }
+}
+
+extension HomeScreen {
+    enum Tab: String, View, CaseIterable {
+        case picker, list, setting
         
         var body: some View {
             content.tabItem { tabLabel }
@@ -19,10 +38,12 @@ struct HomeScreen: View {
         @ViewBuilder
         private var content: some View {
             switch self {
-            case .picker: 
+            case .picker:
                 FoodPickerScreen()
             case .list:
                 FoodListScreen()
+            case .setting:
+                SettingScreen()
             }
         }
         
@@ -31,16 +52,13 @@ struct HomeScreen: View {
             case .picker:
                 return Label("Home",systemImage: .house)
             case .list:
-                return Label("Home",systemImage: .list)
+                return Label("List",systemImage: .list)
+            case .setting:
+                return Label("Setting",systemImage: .gear)
             }
         }
     }
     
-    var body: some View {
-        TabView {
-            ForEach(Tab.allCases, id: \.self) { $0 }
-        }
-    }
 }
 
 #Preview {

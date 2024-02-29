@@ -19,7 +19,6 @@ struct Food: Equatable, Identifiable {
     @Suffix("g") var fat: Double = .zero
     @Suffix("g") var protein: Double = .zero
     
-
     static var examples = [
         Food(name: "玉米", image: "🌽", calorie: 1.2, carb: 2, fat: 3, protein: 3.0),
         Food(name: "汉堡", image: "🍔", calorie: 2, carb: 2.6, fat: 3, protein: 7.9),
@@ -31,5 +30,4 @@ struct Food: Equatable, Identifiable {
         Food(name: "", image: "")
     }
 }
-
 

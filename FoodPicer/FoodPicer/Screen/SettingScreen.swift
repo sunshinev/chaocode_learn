@@ -18,12 +18,32 @@ enum Unit: String, CaseIterable, Identifiable, View {
     }
 }
 
+extension UserDefaults {
+    enum Key: String {
+        case shouldUseDarkMode
+        case unit
+        case startTab
+        case foodList
+    }
+}
+
+extension AppStorage {
+    init(wrappedValue: Value, _ k: UserDefaults.Key, store: UserDefaults? = nil) where Value == Bool {
+        self.init(wrappedValue: wrappedValue, k.rawValue,store: store)
+    }
+    init(wrappedValue: Value, _ k: UserDefaults.Key, store: UserDefaults? = nil) where Value: RawRepresentable, Value.RawValue == String {
+        self.init(wrappedValue: wrappedValue, k.rawValue,store: store)
+    }
+    init(wrappedValue: Value, _ k: UserDefaults.Key, store: UserDefaults? = nil) where Value: RawRepresentable, Value.RawValue == String {
+        self.init(wrappedValue: wrappedValue, k.rawValue,store: store)
+    }
+}
+
 
 struct SettingScreen: View {
-    
-    @State private var shouldUseDarkMode = false
-    @State private var unit: Unit = .gram
-    @State private var startTab: HomeScreen.Tab = .picker
+    @AppStorage(.shouldUseDarkMode) private var shouldUseDarkMode: Bool = false
+    @AppStorage(.unit) private var unit: Unit = .gram
+    @AppStorage(.startTab) private var startTab: HomeScreen.Tab = .picker
     @State private var confirmationDialog: Dialog = .inactive
     
     private var shouldShowDialog: Binding<Bool> {
@@ -64,12 +84,12 @@ struct SettingScreen: View {
                 }
             }
             .confirmationDialog(confirmationDialog.rawValue, isPresented: shouldShowDialog, titleVisibility: .visible) {
-                Button("确定",role: .destructive) {}
+                Button("确定",role: .destructive) {
+                    confirmationDialog.action()
+                }
             } message: {
                 Text(confirmationDialog.message)
             }
-
-
         }
     }
 }
@@ -81,6 +101,8 @@ private enum Dialog: String, CaseIterable, Identifiable {
     
     var id: Self { self }
     
+    static let allCases: [Dialog] = [.resetSetting, .resetFoodList]
+    
     var message: String {
         switch self {
         case .resetSetting:
@@ -91,7 +113,22 @@ private enum Dialog: String, CaseIterable, Identifiable {
             return ""
         }
     }
+    
+    func action() {
+        switch self {
+        case .resetSetting:
+            let key: [UserDefaults.Key] = [.shouldUseDarkMode,.startTab,.unit]
+            key.forEach { k in
+                UserDefaults.standard.removeObject(forKey: k.rawValue)
+            }
+        case .resetFoodList:
+            return
+        case .inactive:
+            return
+        }
+    }
 }
+
 
 #Preview {
     SettingScreen()
