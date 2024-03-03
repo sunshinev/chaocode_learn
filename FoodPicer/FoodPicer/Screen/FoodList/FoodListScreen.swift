@@ -7,32 +7,60 @@
 
 import SwiftUI
 
-struct FoodListScreen: View {
-    @Environment(\.editMode) var editMode
+extension [Food]: RawRepresentable {
     
-//    @State private var foods = Food.examples
-    @AppStorage(.foodList) var foods = Food.examples
-    @State var selectFoodIDSet: Set<UUID> = []
+    public init?(rawValue: String) {
+        if let data = rawValue.data(using: .utf8) {
+            if let array = try? JSONDecoder().decode([Food].self,from: data) {
+                self = array
+                return
+            }
+        }
+        
+        print("[Food] init failed, rawValue is \(rawValue)")
+        
+        return nil
+    }
+    
+    public var rawValue: String {
+        if let data = try? JSONEncoder().encode(self) {
+            print("[Food] rawValue data is \(data)")
+            return String(data: data, encoding: .utf8) ?? ""
+        }else{
+            return ""
+        }
+    }
+    
+}
+
+
+struct FoodListScreen: View {
+    
+    @AppStorage(.foodList) private var foods = Food.examples
+    
+    @State private var editMode: EditMode = .inactive
+    @State var selectFoodIDSet = Set<Food.ID>()
     @State private var sheet: Sheet?
     
+    
+    
     var isEditing: Bool {
-        editMode?.wrappedValue == .active
+        editMode.isEditing
     }
     
     var body: some View {
         VStack (alignment: .leading){
             
             titleBar
-            
-            List($foods, id: \.id, editActions: .all, selection: $selectFoodIDSet) { $food in
-                buildFoodRow($food)
-            }
+        
+            List($foods, editActions: .all, selection: $selectFoodIDSet, rowContent: buildFoodRow)
             .listStyle(.plain)
             .padding(.horizontal)
             .scrollIndicators(.hidden)
         }
         .background(.groupbg)
         .safeAreaInset(edge: .bottom, content: buildFloatButton)
+        .environment(\.editMode, $editMode)
         .sheet(item: $sheet)
     }
     
@@ -67,6 +95,7 @@ struct FoodListScreen: View {
 
 // MARK: button
 extension FoodListScreen {
+    
     func buildFloatButton() -> some View  {
         ZStack {
             removeButton

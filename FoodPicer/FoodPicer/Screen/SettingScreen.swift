@@ -34,9 +34,6 @@ extension AppStorage {
     init(wrappedValue: Value, _ k: UserDefaults.Key, store: UserDefaults? = nil) where Value: RawRepresentable, Value.RawValue == String {
         self.init(wrappedValue: wrappedValue, k.rawValue,store: store)
     }
-    init(wrappedValue: Value, _ k: UserDefaults.Key, store: UserDefaults? = nil) where Value: RawRepresentable, Value.RawValue == String {
-        self.init(wrappedValue: wrappedValue, k.rawValue,store: store)
-    }
 }
 
 
@@ -122,6 +119,7 @@ private enum Dialog: String, CaseIterable, Identifiable {
                 UserDefaults.standard.removeObject(forKey: k.rawValue)
             }
         case .resetFoodList:
+            UserDefaults.standard.removeObject(forKey: UserDefaults.Key.foodList.rawValue)
             return
         case .inactive:
             return
