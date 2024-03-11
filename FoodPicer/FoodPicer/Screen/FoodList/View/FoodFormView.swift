@@ -51,7 +51,7 @@ extension FoodListScreen {
                 }
                 .padding([.horizontal,.top])
                 
-                Form {
+                Form(content: {
                     LabeledContent("名称") {
                         TextField("必填", text: $food.name)
                             .submitLabel(.next)
@@ -69,27 +69,27 @@ extension FoodListScreen {
                             }
                     }
                     
-                    buildLabledContent(title:"热量", value:$food.calorie,suffix:"kcal")
+                    buildLabledContent(title:"热量", value: $food.$calorie, suffix:"kcal")
                         .submitLabel(.next)
                         .focused($field,equals: .calories)
                         .onSubmit {
                             field = .carb
                         }
-                    buildLabledContent(title:"碳水", value:$food.carb,suffix:"g")
+                    buildLabledContent(title:"碳水", value:$food.$carb,suffix:"g")
                         .submitLabel(.next)
                         .focused($field,equals: .carb)
                         .onSubmit {
                             field = .fat
                         }
-                    buildLabledContent(title:"脂肪", value:$food.fat,suffix:"g")
+                    buildLabledContent(title:"脂肪", value:$food.$fat,suffix:"g")
                         .submitLabel(.next)
                         .focused($field,equals: .fat)
                         .onSubmit {
                             field = .protein
                         }
-                    buildLabledContent(title:"蛋白质", value:$food.protein,suffix:"g")
+                    buildLabledContent(title:"蛋白质", value:$food.$protein,suffix:"g")
                         .focused($field,equals: .protein)
-                }
+                })
                 
                 Button {
                     dismiss()
@@ -108,11 +108,25 @@ extension FoodListScreen {
 //            .scrollDismissesKeyboard(.interactively)
         }
         
-        private func buildLabledContent(title: String, value: Binding<Double>, suffix: String) -> some View {
+        private func buildLabledContent<Unit: MyUnitProtocol>(title: String, value: Binding<Suffix<Unit>>, suffix: String) -> some View {
             LabeledContent(title) {
                 HStack{
-                    TextField("必填", value: value,format: .number.precision(.fractionLength(1)))
-                        .keyboardType(.numbersAndPunctuation)
+                    TextField("必填",value: Binding(
+                        get: { value.wrappedValue.wrappedValue},
+                        set: { value.wrappedValue.wrappedValue = $0 }
+                    ),format: .number.precision(.fractionLength(1))
+                    )
+                    .keyboardType(.numbersAndPunctuation)
+                    
+                    if Unit.allCases.count <= 1 {
+                        value.unit.wrappedValue
+                    }else {
+                        Picker("单位", selection: value.unit) {
+                            ForEach(Unit.allCases, id: \.self) {$0}
+                        }
+                        .labelsHidden()
+                    }
+                    
                     Text(suffix)
                 }
             }
@@ -123,5 +137,5 @@ extension FoodListScreen {
 
 
 #Preview {
-    FoodListScreen.FoodFormView(food: Food(name: "", image: "")) { _ in }
+    FoodListScreen.FoodFormView(food: Food(name: "", image: "", calorie: 10, carb: 10, fat: 10, protein: 10)) { _ in }
 }

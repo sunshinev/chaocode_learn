@@ -16,6 +16,8 @@
 		3B87CC662B8CCBF800A4CE2C /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B87CC652B8CCBF800A4CE2C /* HomeScreen.swift */; };
 		3B87CC682B8E23A900A4CE2C /* SettingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B87CC672B8E23A900A4CE2C /* SettingScreen.swift */; };
 		3BA048EC2B824E2C00A6086B /* FoodFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA048EB2B824E2C00A6086B /* FoodFormView.swift */; };
+		3BA776762B9606FB001C8E8E /* SuffixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA776752B9606FB001C8E8E /* SuffixTests.swift */; };
+		3BA7767D2B976687001C8E8E /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA7767C2B976687001C8E8E /* Unit.swift */; };
 		3BF662742B70DD3F002D3FEE /* AppEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF662732B70DD3F002D3FEE /* AppEntry.swift */; };
 		3BF662762B70DD3F002D3FEE /* FoodPickerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF662752B70DD3F002D3FEE /* FoodPickerScreen.swift */; };
 		3BF662782B70DD40002D3FEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BF662772B70DD40002D3FEE /* Assets.xcassets */; };
@@ -23,6 +25,16 @@
 		3BF662822B70DDB4002D3FEE /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF662812B70DDB4002D3FEE /* Food.swift */; };
 		3BF662842B72889E002D3FEE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF662832B72889E002D3FEE /* Extensions.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3BA776772B9606FB001C8E8E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3BF662682B70DD3F002D3FEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3BF6626F2B70DD3F002D3FEE;
+			remoteInfo = FoodPicer;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3B1E241A2B73BF71009BBD83 /* shapeStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shapeStyleView.swift; sourceTree = "<group>"; };
@@ -34,6 +46,9 @@
 		3B87CC652B8CCBF800A4CE2C /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		3B87CC672B8E23A900A4CE2C /* SettingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingScreen.swift; sourceTree = "<group>"; };
 		3BA048EB2B824E2C00A6086B /* FoodFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodFormView.swift; sourceTree = "<group>"; };
+		3BA776732B9606FB001C8E8E /* FoodPicerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FoodPicerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BA776752B9606FB001C8E8E /* SuffixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuffixTests.swift; sourceTree = "<group>"; };
+		3BA7767C2B976687001C8E8E /* Unit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
 		3BF662702B70DD3F002D3FEE /* FoodPicer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodPicer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF662732B70DD3F002D3FEE /* AppEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntry.swift; sourceTree = "<group>"; };
 		3BF662752B70DD3F002D3FEE /* FoodPickerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPickerScreen.swift; sourceTree = "<group>"; };
@@ -44,6 +59,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3BA776702B9606FB001C8E8E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3BF6626D2B70DD3F002D3FEE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -136,14 +158,24 @@
 			isa = PBXGroup;
 			children = (
 				3B87CC632B8B52B100A4CE2C /* SFSymbol.swift */,
+				3BA7767C2B976687001C8E8E /* Unit.swift */,
 			);
 			path = Constant;
+			sourceTree = "<group>";
+		};
+		3BA776742B9606FB001C8E8E /* FoodPicerTests */ = {
+			isa = PBXGroup;
+			children = (
+				3BA776752B9606FB001C8E8E /* SuffixTests.swift */,
+			);
+			path = FoodPicerTests;
 			sourceTree = "<group>";
 		};
 		3BF662672B70DD3F002D3FEE = {
 			isa = PBXGroup;
 			children = (
 				3BF662722B70DD3F002D3FEE /* FoodPicer */,
+				3BA776742B9606FB001C8E8E /* FoodPicerTests */,
 				3BF662712B70DD3F002D3FEE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -152,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				3BF662702B70DD3F002D3FEE /* FoodPicer.app */,
+				3BA776732B9606FB001C8E8E /* FoodPicerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -183,6 +216,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3BA776722B9606FB001C8E8E /* FoodPicerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3BA7767B2B9606FB001C8E8E /* Build configuration list for PBXNativeTarget "FoodPicerTests" */;
+			buildPhases = (
+				3BA7766F2B9606FB001C8E8E /* Sources */,
+				3BA776702B9606FB001C8E8E /* Frameworks */,
+				3BA776712B9606FB001C8E8E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3BA776782B9606FB001C8E8E /* PBXTargetDependency */,
+			);
+			name = FoodPicerTests;
+			productName = FoodPicerTests;
+			productReference = 3BA776732B9606FB001C8E8E /* FoodPicerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		3BF6626F2B70DD3F002D3FEE /* FoodPicer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3BF6627E2B70DD40002D3FEE /* Build configuration list for PBXNativeTarget "FoodPicer" */;
@@ -207,9 +258,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					3BA776722B9606FB001C8E8E = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 3BF6626F2B70DD3F002D3FEE;
+					};
 					3BF6626F2B70DD3F002D3FEE = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
@@ -229,11 +284,19 @@
 			projectRoot = "";
 			targets = (
 				3BF6626F2B70DD3F002D3FEE /* FoodPicer */,
+				3BA776722B9606FB001C8E8E /* FoodPicerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3BA776712B9606FB001C8E8E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3BF6626E2B70DD3F002D3FEE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -246,6 +309,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3BA7766F2B9606FB001C8E8E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BA776762B9606FB001C8E8E /* SuffixTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3BF6626C2B70DD3F002D3FEE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -253,6 +324,7 @@
 				3B1E241E2B74E02C009BBD83 /* FoodListScreen.swift in Sources */,
 				3B87CC5D2B8B4CD800A4CE2C /* FoodDetailSheet.swift in Sources */,
 				3BF662762B70DD3F002D3FEE /* FoodPickerScreen.swift in Sources */,
+				3BA7767D2B976687001C8E8E /* Unit.swift in Sources */,
 				3B1E241B2B73BF71009BBD83 /* shapeStyleView.swift in Sources */,
 				3BF662742B70DD3F002D3FEE /* AppEntry.swift in Sources */,
 				3B87CC5F2B8B4D3A00A4CE2C /* Sheet.swift in Sources */,
@@ -268,7 +340,53 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3BA776782B9606FB001C8E8E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3BF6626F2B70DD3F002D3FEE /* FoodPicer */;
+			targetProxy = 3BA776772B9606FB001C8E8E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		3BA776792B9606FB001C8E8E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6ZFMBV5RXG;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.personal.dev.jaysun.FoodPicerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FoodPicer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FoodPicer";
+			};
+			name = Debug;
+		};
+		3BA7767A2B9606FB001C8E8E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6ZFMBV5RXG;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.personal.dev.jaysun.FoodPicerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FoodPicer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FoodPicer";
+			};
+			name = Release;
+		};
 		3BF6627C2B70DD40002D3FEE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -449,6 +567,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3BA7767B2B9606FB001C8E8E /* Build configuration list for PBXNativeTarget "FoodPicerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BA776792B9606FB001C8E8E /* Debug */,
+				3BA7767A2B9606FB001C8E8E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3BF6626B2B70DD3F002D3FEE /* Build configuration list for PBXProject "FoodPicer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

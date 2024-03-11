@@ -8,22 +8,13 @@
 import SwiftUI
 
 
-enum Unit: String, CaseIterable, Identifiable, View {
-    case gram = "g", pound="lb"
-    
-    var id: Self { self }
-    
-    var body: some View {
-        Text(rawValue)
-    }
-}
-
 extension UserDefaults {
     enum Key: String {
         case shouldUseDarkMode
-        case unit
         case startTab
         case foodList
+        case preferredWeightUnit
+        case preferredEnergyUnit
     }
 }
 
@@ -37,9 +28,15 @@ extension AppStorage {
 }
 
 
+extension AppStorage where Value: MyUnitProtocol {
+    init(wrappedValue: Value = .defaultUnit, _ k: UserDefaults.Key, store: UserDefaults? = nil) where Value: RawRepresentable, Value.RawValue == String {
+        self.init(wrappedValue: wrappedValue, k.rawValue,store: store)
+    }
+}
+
 struct SettingScreen: View {
     @AppStorage(.shouldUseDarkMode) private var shouldUseDarkMode: Bool = false
-    @AppStorage(.unit) private var unit: Unit = .gram
+    @AppStorage(.preferredWeightUnit) private var unit: MyWeightUnit
     @AppStorage(.startTab) private var startTab: HomeScreen.Tab = .picker
     @State private var confirmationDialog: Dialog = .inactive
     
@@ -53,23 +50,25 @@ struct SettingScreen: View {
     }
     
     var body: some View {
-        Form {
+        Form(content:  {
             Section("基本设定") {
-                Toggle(isOn: $shouldUseDarkMode) {
-                    Label("深色模式",systemImage: .moon)
-                }
-                
-                Picker(selection: $unit) {
-                    ForEach(Unit.allCases) { $0 }
-                } label: {
-                    Label("单位", systemImage: .unitSign)
-                }
-                
-                Picker(selection: $startTab) {
-                    Text("随机食物").tag(HomeScreen.Tab.picker)
-                    Text("食物清单").tag(HomeScreen.Tab.list)
-                } label: {
-                    Label("启动画面", systemImage: .house)
+                List {
+                    Toggle(isOn: $shouldUseDarkMode) {
+                        Label("深色模式",systemImage: .moon)
+                    }
+                    
+                    Picker(selection: $unit) {
+                        ForEach(MyWeightUnit.allCases) { $0 }
+                    } label: {
+                        Label("单位", systemImage: .unitSign)
+                    }
+                    
+                    Picker(selection: $startTab) {
+                        Text("随机食物").tag(HomeScreen.Tab.picker)
+                        Text("食物清单").tag(HomeScreen.Tab.list)
+                    } label: {
+                        Label("启动画面", systemImage: .house)
+                    }
                 }
             }
             
@@ -87,7 +86,7 @@ struct SettingScreen: View {
             } message: {
                 Text(confirmationDialog.message)
             }
-        }
+        })
     }
 }
 
@@ -114,7 +113,7 @@ private enum Dialog: String, CaseIterable, Identifiable {
     func action() {
         switch self {
         case .resetSetting:
-            let key: [UserDefaults.Key] = [.shouldUseDarkMode,.startTab,.unit]
+            let key: [UserDefaults.Key] = [.shouldUseDarkMode,.startTab,.preferredWeightUnit]
             key.forEach { k in
                 UserDefaults.standard.removeObject(forKey: k.rawValue)
             }

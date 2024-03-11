@@ -6,7 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
 
+
+typealias Weight  = Suffix<MyWeightUnit>
+typealias Energy = Suffix<MyEnergyUnit>
 
 struct Food: Equatable, Identifiable {
     
@@ -14,10 +18,26 @@ struct Food: Equatable, Identifiable {
     var image: String
     var id = UUID()
     
-    @Suffix("kcal") var calorie: Double = .zero
-    @Suffix("g") var carb: Double = .zero
-    @Suffix("g") var fat: Double = .zero
-    @Suffix("g") var protein: Double = .zero
+    @Energy var calorie: Double
+    @Weight var carb: Double
+    @Weight var fat: Double
+    @Weight var protein: Double
+    
+}
+
+extension Food  {
+    
+    init(name: String, image: String, id: UUID = UUID(), calorie: Double, carb: Double, fat: Double, protein: Double) {
+        self.name = name
+        self.image = image
+        self.id = id
+        self._calorie = .init(wrappedValue: calorie, .cal)
+        self._carb = .init(wrappedValue: carb, .gram)
+        self._fat = .init(wrappedValue: fat, .gram)
+        self._protein = .init(wrappedValue: protein, .gram)
+        
+    }
+
     
     static var examples = [
         Food(name: "玉米", image: "🌽", calorie: 1.2, carb: 2, fat: 3, protein: 3.0),
@@ -27,7 +47,17 @@ struct Food: Equatable, Identifiable {
     ]
     
     static var new: Food {
-        Food(name: "", image: "")
+        let preferredWeightUnit = MyWeightUnit.getPreferredUnit()
+        let preferredEnergyUnit = MyEnergyUnit.getPreferredUnit()
+        
+        return Food(
+            name: "",
+            image: "",
+            calorie: .init(wrappedValue: .zero, preferredEnergyUnit),
+            carb: .init(wrappedValue: .zero,preferredWeightUnit),
+            fat: .init(wrappedValue: .zero,preferredWeightUnit),
+            protein: .init(wrappedValue: .zero,preferredWeightUnit)
+        )
     }
 }
 

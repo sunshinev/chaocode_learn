@@ -41,9 +41,9 @@ extension FoodListScreen {
                         .gridCellUnsizedAxes(.horizontal)
                         .padding(.horizontal,-10)
                     GridRow{
-                        Text(selectedFood.$protein)
-                        Text(selectedFood.$carb)
-                        Text(selectedFood.$fat)
+                        Text(selectedFood.$protein.description)
+                        Text(selectedFood.$carb.description)
+                        Text(selectedFood.$fat.description)
                     }
                     
                 }

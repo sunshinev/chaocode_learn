@@ -73,7 +73,7 @@ extension FoodPickerScreen {
     var selectedFoodShow: some View {
         if let selectedFood {
             FoodShow()
-            Text("热量\(selectedFood.$calorie)")
+            Text("热量\(selectedFood.$calorie.description)")
             FoodDetail()
         }
     }
@@ -111,9 +111,9 @@ extension FoodPickerScreen {
                         .gridCellUnsizedAxes(.horizontal)
                         .padding(.horizontal,-10)
                     GridRow{
-                        Text(selectedFood!.$protein)
-                        Text(selectedFood!.$carb)
-                        Text(selectedFood!.$fat)
+                        Text(selectedFood!.$protein.description)
+                        Text(selectedFood!.$carb.description)
+                        Text(selectedFood!.$fat.description)
                     }
                 }
                 .push(.center)

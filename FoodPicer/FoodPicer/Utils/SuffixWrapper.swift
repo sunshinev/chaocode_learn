@@ -7,18 +7,28 @@
 
 import Foundation
 
-@propertyWrapper struct Suffix: Equatable {
+@propertyWrapper struct Suffix<Unit: MyUnitProtocol>: Equatable {
     var wrappedValue: Double
     
-    private let suffix: String
-    
-    init(wrappedValue: Double, _ suffix: String) {
+    var unit: Unit
+
+    init(wrappedValue: Double, _ unit: Unit) {
         self.wrappedValue = wrappedValue
-        self.suffix = suffix
+        self.unit = unit
     }
     
-    var projectedValue: String {
-        wrappedValue.formatted() + "\(suffix)"
+    var projectedValue: Self {
+        get { self }
+        set { self = newValue }
+    }
+    
+    var description: String {
+        
+        let preferredUnit = Unit.getPreferredUnit()
+        let measurement = Measurement(value: wrappedValue, unit: unit.dimension)
+        let converted = measurement.converted(to: preferredUnit.dimension)
+        
+        return converted.value.formatted(.number.precision(.fractionLength(0...1))) + " \(preferredUnit.rawValue)"
     }
 }
 
